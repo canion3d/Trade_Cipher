@@ -39,7 +39,7 @@ if tickers:
         width: 100%;
         overflow: hidden;
         white-space: nowrap;
-        animation: scroll-left 10s linear infinite;
+        animation: scroll-left 20s linear infinite;
         font-family: 'Arial', sans-serif;
         font-size: 20px;
     }
@@ -60,15 +60,16 @@ if tickers:
     
     banner = ""
     for ticker in tickers:
-        latest_price = latest_quotes[ticker]
-        previous_price = previous_quotes[ticker]
-        if latest_price > previous_price:
-            indicator = "▲"
-            style_class = "up"
-        else:
-            indicator = "▼"
-            style_class = "down"
-        banner += f"<span class='{style_class}' style='margin-right: 50px;'>{ticker}: ${latest_price:.2f} {indicator}</span>"
+        if ticker in latest_quotes.index:
+            latest_price = latest_quotes[ticker]
+            previous_price = previous_quotes[ticker]
+            if latest_price > previous_price:
+                indicator = "▲"
+                style_class = "up"
+            else:
+                indicator = "▼"
+                style_class = "down"
+            banner += f"<span class='{style_class}' style='margin-right: 50px;'>{ticker}: ${latest_price:.2f} {indicator}</span>"
     
     st.markdown(f"<div class='scrolling-banner'>{banner}</div>", unsafe_allow_html=True)
     
