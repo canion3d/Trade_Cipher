@@ -22,7 +22,8 @@ import time
 def get_stock_quotes(tickers):
     stock_data = yf.download(tickers, period="1d", interval="1m")
     latest_quotes = stock_data['Close'].iloc[-1]
-    return latest_quotes
+    previous_quotes = stock_data['Close'].iloc[-2]
+    return latest_quotes, previous_quotes
 
 # Add a sidebar for user input
 tickers = st.sidebar.text_input("Enter stock tickers (comma-separated):", "AAPL, MSFT, GOOG")
@@ -31,7 +32,7 @@ if tickers:
     tickers = tickers.split(',')
     tickers = [ticker.strip().upper() for ticker in tickers]
     
-    # Display scrolling banner
+    # Display scrolling banner with updated styling
     st.markdown("""
     <style>
     .scrolling-banner {
@@ -39,22 +40,38 @@ if tickers:
         overflow: hidden;
         white-space: nowrap;
         animation: scroll-left 10s linear infinite;
+        font-family: 'Arial', sans-serif;
+        font-size: 20px;
     }
     @keyframes scroll-left {
         0% { transform: translateX(100%); }
         100% { transform: translateX(-100%); }
     }
+    .up {
+        color: green;
+    }
+    .down {
+        color: red;
+    }
     </style>
     """, unsafe_allow_html=True)
     
-    quotes = get_stock_quotes(tickers)
+    latest_quotes, previous_quotes = get_stock_quotes(tickers)
     
     banner = ""
-    for ticker, price in quotes.items():
-        banner += f"<span style='margin-right: 50px;'>{ticker}: ${price:.2f}</span>"
+    for ticker in tickers:
+        latest_price = latest_quotes[ticker]
+        previous_price = previous_quotes[ticker]
+        if latest_price > previous_price:
+            indicator = "▲"
+            style_class = "up"
+        else:
+            indicator = "▼"
+            style_class = "down"
+        banner += f"<span class='{style_class}' style='margin-right: 50px;'>{ticker}: ${latest_price:.2f} {indicator}</span>"
     
     st.markdown(f"<div class='scrolling-banner'>{banner}</div>", unsafe_allow_html=True)
-
+    
 col1, col2, col3 = st.columns(3)
 
 with col1:
