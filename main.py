@@ -18,7 +18,7 @@ import os
 import time
 
 # Function to get stock quotes
-@st.cache_data(ttl=60)  # Cache the data for 60 seconds
+@st.cache (ttl=60)  # Cache the data for 60 seconds
 def get_stock_quotes(tickers):
     stock_data = yf.download(tickers, period="1d", interval="1m")
     latest_quotes = stock_data['Close'].iloc[-1]
