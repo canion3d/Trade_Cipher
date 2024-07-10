@@ -23,9 +23,6 @@ def get_stock_quotes(tickers):
     latest_quotes = stock_data['Close'].iloc[-1]
     return latest_quotes
 
-# Streamlit app
-st.title("Trade Cipher Stock Ticker (Updated Every Minute)")
-
 # Add a sidebar for user input
 tickers = st.sidebar.text_input("Enter stock tickers (comma-separated):", "AAPL, MSFT, GOOG")
 
