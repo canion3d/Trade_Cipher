@@ -18,6 +18,7 @@ import os
 import time
 
 # Function to get stock quotes
+@st.cache_data(ttl=60)  # Cache the data for 60 seconds
 def get_stock_quotes(tickers):
     stock_data = yf.download(tickers, period="1d", interval="1m")
     latest_quotes = stock_data['Close'].iloc[-1]
@@ -53,15 +54,6 @@ if tickers:
         banner += f"<span style='margin-right: 50px;'>{ticker}: ${price:.2f}</span>"
     
     st.markdown(f"<div class='scrolling-banner'>{banner}</div>", unsafe_allow_html=True)
-    
-    # Refresh quotes every minute
-    while True:
-        quotes = get_stock_quotes(tickers)
-        banner = ""
-        for ticker, price in quotes.items():
-            banner += f"<span style='margin-right: 50px;'>{ticker}: ${price:.2f}</span>"
-        st.markdown(f"<div class='scrolling-banner'>{banner}</div>", unsafe_allow_html=True)
-        time.sleep(60)
 
 col1, col2, col3 = st.columns(3)
 
