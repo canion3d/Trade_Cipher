@@ -14,9 +14,57 @@ import mplfinance as mpf
 import plotly.graph_objects as go
 import js2py
 from django.db import models
-
 import os
-import streamlit as st
+import time
+
+# Function to get stock quotes
+def get_stock_quotes(tickers):
+    stock_data = yf.download(tickers, period="1d", interval="1m")
+    latest_quotes = stock_data['Close'].iloc[-1]
+    return latest_quotes
+
+# Streamlit app
+st.title("Personal Finance Dashboard")
+
+# Add a sidebar for user input
+tickers = st.sidebar.text_input("Enter stock tickers (comma-separated):", "AAPL, MSFT, GOOG")
+
+if tickers:
+    tickers = tickers.split(',')
+    tickers = [ticker.strip().upper() for ticker in tickers]
+    
+    # Display scrolling banner
+    st.markdown("""
+    <style>
+    .scrolling-banner {
+        width: 100%;
+        overflow: hidden;
+        white-space: nowrap;
+        animation: scroll-left 10s linear infinite;
+    }
+    @keyframes scroll-left {
+        0% { transform: translateX(100%); }
+        100% { transform: translateX(-100%); }
+    }
+    </style>
+    """, unsafe_allow_html=True)
+    
+    quotes = get_stock_quotes(tickers)
+    
+    banner = ""
+    for ticker, price in quotes.items():
+        banner += f"<span style='margin-right: 50px;'>{ticker}: ${price:.2f}</span>"
+    
+    st.markdown(f"<div class='scrolling-banner'>{banner}</div>", unsafe_allow_html=True)
+    
+    # Refresh quotes every minute
+    while True:
+        quotes = get_stock_quotes(tickers)
+        banner = ""
+        for ticker, price in quotes.items():
+            banner += f"<span style='margin-right: 50px;'>{ticker}: ${price:.2f}</span>"
+        st.markdown(f"<div class='scrolling-banner'>{banner}</div>", unsafe_allow_html=True)
+        time.sleep(60)
 
 col1, col2, col3 = st.columns(3)
 
