@@ -26,7 +26,7 @@ def get_stock_quotes(tickers):
     return latest_quotes, previous_quotes
 
 # Add a sidebar for user input
-tickers = st.sidebar.text_input("Enter stock tickers (comma-separated):", "AAPL, MSFT, GOOG")
+tickers = st.sidebar.text_input("Enter stock tickers (comma-separated):", "VIX, MSFT, NVDA, TSLA,")
 
 if tickers:
     tickers = tickers.split(',')
@@ -84,7 +84,12 @@ with col2:
 with col3:
     st.write(' ')
     
-#st.markdown("<h1 style='text-align: center;'>BYOB is here with Trade Cipher! Bring Your Own Broker is the future!</h1>", unsafe_allow_html=True)
+#st.markdown("<h1 style='text-align: center;'>The VIX is a key trading indicator that reflects the market's expectations for volatility in the next 30 days, based on S&P 500 index options. 
+
+A higher VIX signals increased market uncertainty and potential turbulence, while a lower VIX suggests a more stable and calm market environment. 
+
+Monitoring VIX levels and trends can be crucial for shaping effective trading strategies.
+</h1>", unsafe_allow_html=True)
 
 # Add divider line
 st.markdown("---")
