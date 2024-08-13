@@ -84,11 +84,7 @@ with col2:
 with col3:
     st.write(' ')
     
-#st.markdown("<h1 style='text-align: center;'>The VIX is a key trading indicator that reflects the market's expectations for volatility in the next 30 days, based on S&P 500 index options. 
-
-A higher VIX signals increased market uncertainty and potential turbulence, while a lower VIX suggests a more stable and calm market environment. 
-
-Monitoring VIX levels and trends can be crucial for shaping effective trading strategies.
+#st.markdown("<h1 style='text-align: center;'>The VIX is a key trading indicator that reflects the market's expectations for volatility in the next 30 days, based on S&P 500 index options. A higher VIX signals increased market uncertainty and potential turbulence, while a lower VIX suggests a more stable and calm market environment. Monitoring VIX levels and trends can be crucial for shaping effective trading strategies.
 </h1>", unsafe_allow_html=True)
 
 # Add divider line
