@@ -26,7 +26,7 @@ def get_stock_quotes(tickers):
     return latest_quotes, previous_quotes
 
 # Add a sidebar for user input
-tickers = st.sidebar.text_input("Enter stock tickers (comma-separated):", "VIX, MSFT, NVDA, TSLA,")
+tickers = st.sidebar.text_input("Enter stock tickers (comma-separated))
 
 if tickers:
     tickers = tickers.split(',')
